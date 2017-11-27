@@ -33,7 +33,7 @@ var lenOfLeft = index;
 var inorderOfLeft=inorder.slice(0,index);
 var preorderOfLeft=preorder.slice(1,lenOfLeft+1);
 var inorderOfRight=inorder.slice(index+1);
-var preorderOfRight=preorder,slick(lenOfLeft+1);
+var preorderOfRight=preorder.slice(lenOfLeft+1);
 root = new Node(data,buildBinaryTree(preorderOfLeft, inorderOfLeft), buildBinaryTree(preorderOfRight, inorderOfRight));
 }
  break;
