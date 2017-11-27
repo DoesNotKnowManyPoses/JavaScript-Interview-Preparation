@@ -1,0 +1,43 @@
+//build binary tree from preorder traversal and inorder traversal, result of preorder traversal {1,2,4,7,3,5,6,8}, inorder traversal
+//{4,7,2,1,5,3,8，6}, no repeated number in the original binary tree.
+//从先序遍历的结果和中序遍历的结果还原二叉树的结构,先序遍历结果{1,2,4,7,3,5,6,8},中序遍历结果{4,7,2,1,5,3,8，6},原树中无重复数字
+//https://segmentfault.com/a/1190000007231946
+function Node(data,left,right){
+this.data = data;
+this.left = left;
+this.right = right;
+}
+
+function buildBinaryTree(preorder,inorder){
+if(preorder.length!=inorder.length) return null;
+if(preorder.length<0) return null;
+if(preorder.length==1) return new Node(preorder[0],null,null);
+var data = preorder[0];
+var root = null;
+var len = preorder.length;
+var index;
+for( index=0 ; index<len; index ++){
+ if(inorder[index]==data){
+ if(index==0){
+var preorderOfRight = preorder.slice(1);
+var inorderOfRight = inorder.slice(1);
+root = new Node(data,null,buildBinaryTree(preorderOfRight,inorderOfRight));
+}
+else if (index==len-1){
+var preorderOfLeft = preorder.slice(1);
+var inorderOfLeft = inorder.slice(0,len-1);
+root = new Node(data,buildBinaryTree(preorderOfLeft, inorderOfLeft),null);
+}
+else{
+var lenOfLeft = index;
+var inorderOfLeft=inorder.slice(0,index);
+var preorderOfLeft=preorder.slice(1,lenOfLeft+1);
+var inorderOfRight=inorder.slice(index+1);
+var preorderOfRight=preorder,slick(lenOfLeft+1);
+root = new Node(data,buildBinaryTree(preorderOfLeft, inorderOfLeft), buildBinaryTree(preorderOfRight, inorderOfRight));
+}
+ break;
+ }
+}
+return root;
+}
